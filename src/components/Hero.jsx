@@ -1,5 +1,7 @@
+import React, { lazy, Suspense } from 'react'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
-import Spline from '@splinetool/react-spline'
+
+const Spline = lazy(() => import('@splinetool/react-spline'))
 
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion()
@@ -9,10 +11,14 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative min-h-[100vh] w-full overflow-hidden">
-      {/* Deep background 3D scene */}
-      <div className="absolute inset-0 -z-40">
-        <Spline scene="https://prod.spline.design/FduaNp3csZktbOi3/scene.splinecode" style={{ width: '100%', height: '100%' }} />
-      </div>
+      {/* Deep background 3D scene (lazy-loaded, respects reduced motion) */}
+      {!shouldReduceMotion && (
+        <div className="absolute inset-0 -z-40">
+          <Suspense fallback={<div className="absolute inset-0 bg-[radial-gradient(1200px_600px_at_50%_-10%,rgba(59,130,246,0.12),transparent)]" />}> 
+            <Spline scene="https://prod.spline.design/FduaNp3csZktbOi3/scene.splinecode" style={{ width: '100%', height: '100%' }} />
+          </Suspense>
+        </div>
+      )}
 
       {/* Aurora gradients with subtle parallax */}
       <motion.div style={{ y: yAurora }} aria-hidden className="pointer-events-none absolute inset-0 -z-30 mix-blend-screen">
