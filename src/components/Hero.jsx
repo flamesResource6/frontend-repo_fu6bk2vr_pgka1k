@@ -61,39 +61,112 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative mx-auto max-w-7xl px-6 pt-40 pb-32">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="max-w-3xl"
-        >
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-[11px] font-medium tracking-wide text-blue-300 backdrop-blur"
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="max-w-3xl"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
-            </span>
-            AVAILABLE FOR FREELANCE
-          </motion.p>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white">
-            Building immersive, high-performance digital experiences
-          </h1>
-          <p className="mt-6 text-slate-300 text-lg leading-relaxed">
-            I craft premium, responsive interfaces with motion, depth, and a focus on performance. Explore my work and let's build something remarkable together.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <a href="#projects" className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-3 text-white font-semibold shadow-[0_8px_30px_rgb(59,130,246,0.35)] hover:shadow-[0_8px_40px_rgb(59,130,246,0.55)] transition-all hover:translate-y-[-1px]">
-              View Projects
-            </a>
-            <a href="#contact" className="inline-flex items-center justify-center rounded-xl border border-slate-700 bg-slate-900/60 px-5 py-3 text-slate-200 hover:bg-slate-900 hover:border-slate-600 transition-colors">
-              Get in Touch
-            </a>
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-[11px] font-medium tracking-wide text-blue-300 backdrop-blur"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
+              </span>
+              AVAILABLE FOR FREELANCE
+            </motion.p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white">
+              Building immersive, high-performance digital experiences
+            </h1>
+            <p className="mt-6 text-slate-300 text-lg leading-relaxed">
+              I craft premium, responsive interfaces with motion, depth, and a focus on performance. Explore my work and let's build something remarkable together.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <a href="#projects" className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-3 text-white font-semibold shadow-[0_8px_30px_rgb(59,130,246,0.35)] hover:shadow-[0_8px_40px_rgb(59,130,246,0.55)] transition-all hover:translate-y-[-1px]">
+                View Projects
+              </a>
+              <a href="#contact" className="inline-flex items-center justify-center rounded-xl border border-slate-700 bg-slate-900/60 px-5 py-3 text-slate-200 hover:bg-slate-900 hover:border-slate-600 transition-colors">
+                Get in Touch
+              </a>
+            </div>
+          </motion.div>
+
+          {/* Animated 3D design: holographic rotating cube with orbiting rings */}
+          <div className="relative hidden lg:block">
+            <div className="pointer-events-none absolute -inset-8 -z-10 rounded-3xl bg-gradient-to-tr from-blue-500/10 via-cyan-400/10 to-transparent blur-2xl" />
+            <div className="mx-auto h-[420px] w-[420px] [perspective:1200px]">
+              {shouldReduceMotion ? (
+                <div className="relative h-full w-full rounded-2xl border border-slate-700/60 bg-slate-900/40 backdrop-blur [transform-style:preserve-3d] shadow-[0_30px_120px_-20px_rgba(59,130,246,0.35)]">
+                  {[
+                    { z: 80, rot: 'rotateX(0deg) rotateY(0deg)', bg: 'from-blue-500/40 to-cyan-400/40' },
+                    { z: -80, rot: 'rotateX(180deg) rotateY(0deg)', bg: 'from-blue-500/40 to-cyan-400/40' },
+                    { z: 0, rot: 'rotateY(90deg) translateZ(80px)', bg: 'from-cyan-400/40 to-blue-500/40' },
+                    { z: 0, rot: 'rotateY(-90deg) translateZ(80px)', bg: 'from-cyan-400/40 to-blue-500/40' },
+                    { z: 0, rot: 'rotateX(90deg) translateZ(80px)', bg: 'from-blue-500/40 to-cyan-400/40' },
+                    { z: 0, rot: 'rotateX(-90deg) translateZ(80px)', bg: 'from-blue-500/40 to-cyan-400/40' },
+                  ].map((face, i) => (
+                    <div
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={i}
+                      className="absolute inset-0 m-auto h-40 w-40 rounded-xl border border-blue-400/30 bg-gradient-to-br shadow-[inset_0_0_40px_rgba(59,130,246,0.25)]"
+                      style={{ transform: face.rot }}
+                    />
+                  ))}
+                  {/* Static ring */}
+                  <div className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/30" />
+                </div>
+              ) : (
+                <motion.div
+                  initial={{ rotateX: -10, rotateY: 15, rotateZ: 0 }}
+                  animate={{ rotateX: [ -10, 10, -10 ], rotateY: [ 15, -15, 15 ] }}
+                  transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+                  className="relative h-full w-full rounded-2xl border border-slate-700/60 bg-slate-900/40 backdrop-blur [transform-style:preserve-3d] shadow-[0_30px_120px_-20px_rgba(59,130,246,0.35)]"
+                >
+                  {/* Faces */}
+                  {[
+                    { transform: 'translateZ(80px)', grad: 'from-blue-500/35 to-cyan-400/35' },
+                    { transform: 'rotateY(180deg) translateZ(80px)', grad: 'from-blue-500/35 to-cyan-400/35' },
+                    { transform: 'rotateY(90deg) translateZ(80px)', grad: 'from-cyan-400/35 to-blue-500/35' },
+                    { transform: 'rotateY(-90deg) translateZ(80px)', grad: 'from-cyan-400/35 to-blue-500/35' },
+                    { transform: 'rotateX(90deg) translateZ(80px)', grad: 'from-blue-500/35 to-cyan-400/35' },
+                    { transform: 'rotateX(-90deg) translateZ(80px)', grad: 'from-blue-500/35 to-cyan-400/35' },
+                  ].map((f, i) => (
+                    <div
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={i}
+                      className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-xl border border-blue-400/30 bg-gradient-to-br shadow-[inset_0_0_40px_rgba(59,130,246,0.25)]"
+                      style={{ transform: f.transform, backgroundImage: undefined }}
+                    >
+                      <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${f.grad}`} />
+                    </div>
+                  ))}
+
+                  {/* Orbiting rings */}
+                  <motion.div
+                    initial={{ rotateZ: 0 }}
+                    animate={{ rotateZ: 360 }}
+                    transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+                    className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/30 [transform:translateZ(0.001px)]"
+                  />
+                  <motion.div
+                    initial={{ rotateZ: 0 }}
+                    animate={{ rotateZ: -360 }}
+                    transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
+                    className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-400/25 [transform:translateZ(0.001px)]"
+                  />
+
+                  {/* Glow core */}
+                  <div className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-3xl" />
+                </motion.div>
+              )}
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Subtle twinkling stars for extra depth */}
