@@ -19,7 +19,7 @@ export default function Navbar() {
   ]
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all ${scrolled ? 'backdrop-blur-md bg-slate-900/70 border-b border-slate-800' : 'bg-transparent'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all ${scrolled ? 'backdrop-blur-xl bg-slate-900/60 border-b border-slate-800' : 'bg-transparent'}`}>
       <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
         <a href="#home" className="font-semibold text-white text-lg tracking-tight">Portfolio<span className="text-blue-400">.</span></a>
 
@@ -44,7 +44,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden border-t border-slate-800 bg-slate-900/90 backdrop-blur-md">
+        <div className="md:hidden border-t border-slate-800 bg-slate-900/90 backdrop-blur-md animate-in">
           <div className="mx-auto max-w-7xl px-6 py-4 flex flex-col gap-4">
             {navItems.map((item) => (
               <a key={item.href} href={item.href} onClick={() => setOpen(false)} className="text-slate-200">

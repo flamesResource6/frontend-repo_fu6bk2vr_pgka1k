@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
+import SectionHeader from './SectionHeader'
 
 const projects = [
   {
@@ -24,11 +25,15 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="relative overflow-hidden bg-slate-950 py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(900px_300px_at_0%_20%,rgba(37,99,235,0.15),transparent),radial-gradient(700px_300px_at_100%_80%,rgba(14,165,233,0.12),transparent)]" />
+    <section id="projects" className="relative overflow-hidden py-28">
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(900px_300px_at_0%_20%,rgba(37,99,235,0.15),transparent),radial-gradient(700px_300px_at_100%_80%,rgba(14,165,233,0.12),transparent)]" />
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="mb-12 flex items-end justify-between">
-          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Selected Work</h2>
+          <SectionHeader
+            eyebrow="Work"
+            title="Selected projects"
+            subtitle="A mix of experimental interfaces and production-grade UI systems."
+          />
           <a href="#contact" className="text-blue-400 hover:text-blue-300">Work with me</a>
         </div>
 
@@ -58,6 +63,13 @@ export default function Projects() {
                   <span key={t} className="rounded-md border border-slate-700 bg-slate-800/60 px-2 py-1 text-xs text-slate-300">{t}</span>
                 ))}
               </div>
+              {/* bottom reveal gradient */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-blue-500/10 to-transparent"
+              />
             </motion.a>
           ))}
         </div>
