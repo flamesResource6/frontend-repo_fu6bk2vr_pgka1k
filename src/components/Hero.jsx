@@ -1,21 +1,59 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import Spline from '@splinetool/react-spline'
 
 export default function Hero() {
+  const shouldReduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll()
+  const yAurora = useTransform(scrollYProgress, [0, 1], [0, shouldReduceMotion ? 0 : -120])
+  const yBeams = useTransform(scrollYProgress, [0, 1], [0, shouldReduceMotion ? 0 : -80])
+
   return (
     <section id="home" className="relative min-h-[100vh] w-full overflow-hidden">
-      {/* Background gradients for depth */}
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(1200px_600px_at_50%_-10%,rgba(59,130,246,0.12),transparent),radial-gradient(900px_400px_at_10%_10%,rgba(14,165,233,0.12),transparent)]" />
-
-      {/* 3D Spline scene */}
-      <div className="absolute inset-0 -z-20">
+      {/* Deep background 3D scene */}
+      <div className="absolute inset-0 -z-40">
         <Spline scene="https://prod.spline.design/FduaNp3csZktbOi3/scene.splinecode" style={{ width: '100%', height: '100%' }} />
       </div>
 
-      {/* Gradient scrim for readability */}
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_rgba(2,6,23,0.2),_rgba(2,6,23,0.9))]" />
+      {/* Aurora gradients with subtle parallax */}
+      <motion.div style={{ y: yAurora }} aria-hidden className="pointer-events-none absolute inset-0 -z-30 mix-blend-screen">
+        <div className="absolute -left-24 top-[-10%] h-[60vh] w-[60vw] rounded-full bg-[radial-gradient(closest-side,rgba(59,130,246,0.35),rgba(59,130,246,0.18),transparent)] blur-3xl opacity-60" />
+        <div className="absolute right-[-10%] bottom-[-10%] h-[55vh] w-[55vw] rounded-full bg-[radial-gradient(closest-side,rgba(14,165,233,0.28),rgba(14,165,233,0.14),transparent)] blur-3xl opacity-60" />
+        <motion.div
+          initial={{ opacity: 0.4, rotate: 0 }}
+          animate={{ opacity: 0.7, rotate: shouldReduceMotion ? 0 : 8 }}
+          transition={{ duration: 12, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
+          className="absolute left-1/4 top-1/3 h-[45vh] w-[50vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,rgba(99,102,241,0.25),rgba(59,130,246,0.22),rgba(14,165,233,0.18),transparent_70%)] blur-2xl opacity-70"
+        />
+      </motion.div>
+
+      {/* Soft parallax light beams */}
+      <motion.div style={{ y: yBeams }} aria-hidden className="pointer-events-none absolute inset-x-0 top-[22%] -z-20">
+        <motion.div
+          initial={{ x: '-15%' }}
+          animate={{ x: shouldReduceMotion ? '-15%' : '15%' }}
+          transition={{ duration: 16, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
+          className="mx-auto h-28 max-w-7xl rounded-full bg-gradient-to-r from-blue-500/15 via-cyan-400/10 to-transparent blur-2xl"
+        />
+      </motion.div>
+
+      {/* Decorative grid with edge fade */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.08]"
+        style={{
+          backgroundImage:
+            'linear-gradient(to right, rgba(148,163,184,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(148,163,184,0.12) 1px, transparent 1px)',
+          backgroundSize: '48px 48px, 48px 48px',
+          WebkitMaskImage: 'radial-gradient(70% 60% at 50% 40%, black 60%, transparent 100%)',
+          maskImage: 'radial-gradient(70% 60% at 50% 40%, black 60%, transparent 100%)',
+        }}
+      />
+
+      {/* Gradient scrims for readability */}
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_rgba(2,6,23,0.18),_rgba(2,6,23,0.92))]" />
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-slate-950/40 to-slate-950" />
 
+      {/* Content */}
       <div className="relative mx-auto max-w-7xl px-6 pt-40 pb-32">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -51,6 +89,19 @@ export default function Hero() {
           </div>
         </motion.div>
       </div>
+
+      {/* Subtle twinkling stars for extra depth */}
+      <motion.div
+        aria-hidden
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.12 }}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          backgroundImage: 'radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.7), transparent), radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,0.6), transparent), radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,0.55), transparent), radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,0.65), transparent)',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
 
       {/* Floating glow orbs */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.8 }} className="pointer-events-none absolute -left-10 top-24 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl" />
